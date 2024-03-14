@@ -1,4 +1,4 @@
-module zbatitbot
+module github.com/zaboal/tilde
 
 go 1.21.6
 

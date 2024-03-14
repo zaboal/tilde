@@ -3,27 +3,24 @@ package main
 import (
 	"flag"
 	"log"
-	"os/exec"
+	"os"
 	"regexp"
 
 	api "github.com/go-telegram-bot-api/telegram-bot-api/v5"
+	ansi "github.com/zaboal/tilde/internal/ansi"
+	tilde "github.com/zaboal/tilde/internal/tilde"
 )
+
+var logger = log.New(os.Stdout, ansi.Bold("telegram bot "), log.Ldate+log.Ltime+log.Lmsgprefix)
 
 var token = flag.String("token", "", "token for telegram")
 var provider = flag.String("provider", "", "provider token for telegram")
 
 func init() { flag.Parse() }
 
-func linkUserName(username string) string {
-	return link("https://t.me/"+username, "@"+username)
-}
-
 func main() {
-	command := exec.Command("echo", "world")
-	command.Output()
-
 	var bot, _ = api.NewBotAPI(*token)
-	log.Printf("authorized as %s", linkUserName(bot.Self.UserName))
+	logger.Print("authorized as " + tme(bot.Self.UserName))
 
 	u := api.NewUpdate(0)
 	u.Timeout = 60
@@ -60,13 +57,13 @@ func main() {
 		}
 		if precheckout := update.PreCheckoutQuery; precheckout != nil {
 			username := precheckout.InvoicePayload
-			password, error := register(username)
+			logger.Printf("got a precheckout with payload \"%s\"", username)
+			password, error := tilde.Subscribe(username)
 
 			if error == nil {
 				bot.Send(api.PreCheckoutConfig{
 					PreCheckoutQueryID: precheckout.ID,
 					OK:                 true,
-					ErrorMessage:       "привет",
 				})
 				bot.Send(api.MessageConfig{
 					BaseChat: api.BaseChat{
@@ -78,7 +75,7 @@ func main() {
 					ParseMode: "MarkdownV2",
 				})
 			} else {
-				log.Printf("didn't registered %s, \"%s\"", linkUserName(precheckout.From.UserName), error)
+				logger.Printf("didn't subscribed %s: %s", tme(precheckout.From.UserName), error)
 				bot.Send(api.PreCheckoutConfig{
 					PreCheckoutQueryID: precheckout.ID,
 					OK:                 false,
@@ -87,6 +84,11 @@ func main() {
 			}
 		}
 	}
+}
+
+// hyperlink telegram usernames in console
+func tme(username string) string {
+	return ansi.Link("@"+username, "https://t.me/"+username)
 }
 
 // определение юзернейма
