@@ -1,0 +1,6 @@
+[submodule "telegram-bot-api"]
+	path = telegram-bot-api
+	url = https://github.com/OvyFlash/telegram-bot-api.git
+[submodule "ansi"]
+	path = ansi
+	url = https://github.com/zaboal/ansi
