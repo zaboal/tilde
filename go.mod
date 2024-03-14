@@ -4,7 +4,7 @@ go 1.21.6
 
 require github.com/go-telegram-bot-api/telegram-bot-api/v5 v5.5.1
 
-replace github.com/go-telegram-bot-api/telegram-bot-api/v5 => ./telegram-bot-api
+replace github.com/go-telegram-bot-api/telegram-bot-api/v5 => ./vendors/telegram-bot-api
 
 require github.com/sethvargo/go-password v0.2.0
 
