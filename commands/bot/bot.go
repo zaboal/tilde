@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"flag"
 	"log"
 	"os"
@@ -77,10 +78,17 @@ func main() {
 				})
 			} else {
 				logger.Printf("did "+ansi.Italic("not")+" subscribed %s: %s", tme(precheckout.From.UserName), error)
+
+				var errorMessage string
+				var userNameExistsError *tilde.UserNameExistsError
+				if errors.As(error, &userNameExistsError) {
+					errorMessage = "имя пользователя занято, напишите другое после /subcribe"
+				}
+
 				bot.Send(api.PreCheckoutConfig{
 					PreCheckoutQueryID: precheckout.ID,
 					OK:                 false,
-					ErrorMessage:       error.Error(),
+					ErrorMessage:       errorMessage,
 				})
 			}
 		}

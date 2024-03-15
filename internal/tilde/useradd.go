@@ -1,7 +1,6 @@
 package tilde
 
 import (
-	"errors"
 	"log"
 	"os"
 	"os/exec"
@@ -18,7 +17,7 @@ var logger = log.New(os.Stdout, ansi.Bold("tilde "), log.Ldate+log.Ltime+log.Lms
 // subcribe a user onto tilde
 func Subscribe(username string) (password string, error error) {
 	if Exists(username) {
-		return "", errors.New("the username " + username + " is taken")
+		return "", &UserNameExistsError{username: username}
 	}
 
 	password, shadow := Password()
@@ -46,6 +45,14 @@ func Exists(username string) bool {
 		logger.Printf("checked the username \"%s\" and it is "+ansi.Italic("not")+" avialable", username)
 		return true
 	}
+}
+
+type UserNameExistsError struct {
+	username string
+}
+
+func (error *UserNameExistsError) Error() string {
+	return "the username " + error.username + " is taken"
 }
 
 // generate and hash a password as for /etc/shadow
