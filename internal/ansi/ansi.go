@@ -8,15 +8,20 @@ const (
 )
 
 const (
-	reset = "0m"
-	bold  = "1m"
+	reset  = "0m"
+	bold   = "1m"
+	italic = "3m"
 )
+
+// make a hyperlink. https://gist.github.com/egmontkob/eb114294efbcd5adb1944c9f3cb5feda
+func Link(text, uri string) string {
+	return osc + "8;;" + uri + bel + text + osc + "8;;" + bel
+}
 
 func Bold(text string) string {
 	return esc + bold + text + esc + reset
 }
 
-// make a hyperlink. https://gist.github.com/egmontkob/eb114294efbcd5adb1944c9f3cb5feda
-func Link(text, uri string) string {
-	return osc + "8;;" + uri + bel + text + osc + "8;;" + bel
+func Italic(text string) string {
+	return esc + italic + text + esc + reset
 }

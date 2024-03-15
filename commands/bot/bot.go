@@ -55,6 +55,7 @@ func main() {
 				continue
 			}
 		}
+
 		if precheckout := update.PreCheckoutQuery; precheckout != nil {
 			username := precheckout.InvoicePayload
 			logger.Printf("got a precheckout with payload \"%s\"", username)
@@ -75,11 +76,11 @@ func main() {
 					ParseMode: "MarkdownV2",
 				})
 			} else {
-				logger.Printf("didn't subscribed %s: %s", tme(precheckout.From.UserName), error)
+				logger.Printf("did "+ansi.Italic("not")+" subscribed %s: %s", tme(precheckout.From.UserName), error)
 				bot.Send(api.PreCheckoutConfig{
 					PreCheckoutQueryID: precheckout.ID,
 					OK:                 false,
-					ErrorMessage:       "имя пользователя занято",
+					ErrorMessage:       error.Error(),
 				})
 			}
 		}
