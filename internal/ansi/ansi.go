@@ -1,4 +1,7 @@
-// ANSI escape codes
+// SPDX-FileCopyrightText: 2024 Bogdan Alekseevich Zazhigin <zaboal@tuta.io>
+// SPDX-License-Identifier: 0BSD
+
+// Package ansi provides escape, e.g. for stylish logs
 package ansi
 
 const (
@@ -13,7 +16,6 @@ const (
 	italic = "3m"
 )
 
-// make a hyperlink. https://gist.github.com/egmontkob/eb114294efbcd5adb1944c9f3cb5feda
 func Link(text, uri string) string {
 	return osc + "8;;" + uri + bel + text + osc + "8;;" + bel
 }

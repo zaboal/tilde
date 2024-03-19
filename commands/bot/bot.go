@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2024 Bogdan Alekseevich Zazhigin <zaboal@tuta.io>
+// SPDX-License-Identifier: 0BSD
+
 package main
 
 import (
@@ -33,7 +36,7 @@ func main() {
 			switch message.Command() {
 			// платная регистрация пользователя на сервере
 			case "subcribe":
-				username := Username(*message)
+				username := chooseUsername(*message)
 				bot.Send(api.InvoiceConfig{
 					BaseChat: api.BaseChat{
 						ChatConfig: api.ChatConfig{ChatID: message.Chat.ID},
@@ -95,13 +98,13 @@ func main() {
 	}
 }
 
-// hyperlink telegram usernames in console
+// hyperlink telegram usernames for console
 func tme(username string) string {
 	return ansi.Link("@"+username, "https://t.me/"+username)
 }
 
-// определение юзернейма
-func Username(message api.Message) (username string) {
+// choose a username from the message
+func chooseUsername(message api.Message) (username string) {
 	argument := message.CommandArguments()
 	isValidLogin, _ := regexp.MatchString("[a-z_][a-z0-9_-]*[$]?", argument)
 	if argument != "" && isValidLogin {

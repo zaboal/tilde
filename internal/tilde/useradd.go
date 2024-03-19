@@ -1,3 +1,8 @@
+// SPDX-FileCopyrightText: 2024 Bogdan Alekseevich Zazhigin <zaboal@tuta.io>
+// SPDX-License-Identifier: 0BSD
+
+// Package tilde provides functions to interact with a server
+// in order for not registered guests.
 package tilde
 
 import (
@@ -14,7 +19,8 @@ import (
 
 var logger = log.New(os.Stdout, ansi.Bold("tilde "), log.Ldate+log.Ltime+log.Lmsgprefix)
 
-// subcribe a user onto tilde
+// Subscribe adds a user onto the tilde with the `useradd` command.
+// The user will have a generated password and the expiration and inactivity dates.
 func Subscribe(username string) (password string, error error) {
 	if Exists(username) {
 		return "", &UserNameExistsError{username: username}
@@ -35,7 +41,7 @@ func Subscribe(username string) (password string, error error) {
 	return password, command.Run()
 }
 
-// check if a username is already exists
+// Exists returns false if the username is taken and true if not.
 func Exists(username string) bool {
 	command := exec.Command("id", username)
 	if command.Run() != nil {
@@ -55,7 +61,7 @@ func (error *UserNameExistsError) Error() string {
 	return "the username " + error.username + " is taken"
 }
 
-// generate and hash a password as for /etc/shadow
+// Password generates and hashes a password as for /etc/shadow
 func Password() (password string, shadow string) {
 	password, _ = sethvargo.Generate(8, 4, 0, true, true)
 	shadow, _ = sha512.New().Generate([]byte(password), nil)
