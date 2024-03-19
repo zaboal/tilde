@@ -1,0 +1,8 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: tilde
+Upstream-Contact: Bogdan Alekseevich Zazhigin <zaboal@tuta.io>
+Source: https://github.com/zaboal/tilde
+
+Files: go.mod go.sum staticcheck.conf .gitmodules
+Copyright: 2024 Bogdan Alekseevich Zazhigin <zaboal@tuta.io>
+License: 0BSD

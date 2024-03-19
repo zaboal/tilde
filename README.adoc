@@ -3,6 +3,7 @@
 
 == licensing
 
-generally it's under https://landley.net/toybox/license.html[`0bsd`] and https://creativecommons.org/publicdomain/zero/1.0/legalcode[`cc0-1.0`].
+overall, it's under https://landley.net/toybox/license.html[`0bsd`] and https://creativecommons.org/publicdomain/zero/1.0/legalcode[`cc0-1.0`].
 
-*for https://github.com/licensee/licensee[`licensee`]*, it is in link:./LICENSE[`./LICENSE`]. *for https://git.fsfe.org/reuse[`reuse`]*, all the `\*.go` and `*.adoc` files have the https://reuse.software/spec/#comment-headers[comment headers], and other files are licensed in link:./.reuse/dep5[`./.reuse/dep5`].
+- for *https://github.com/licensee/licensee[`licensee`]*, it is in link:./LICENSE[`./LICENSE`]. 
+- for *https://git.fsfe.org/reuse[`reuse`]*, all the `\*.go` and `*.adoc` files have the https://reuse.software/spec/#comment-headers[comment headers], and other files are licensed in link:./.reuse/dep5[`./.reuse/dep5`]; the texts are in link:./LICENSES[`./LICENSES`].
