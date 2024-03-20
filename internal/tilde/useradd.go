@@ -21,7 +21,7 @@ var logger = log.New(os.Stdout, ansi.Bold("tilde "), log.Ldate+log.Ltime+log.Lms
 
 // Subscribe adds a user onto the tilde with the `useradd` command.
 // The user will have a generated password and the expiration and inactivity dates.
-func Subscribe(username string) (password string, error error) {
+func userAdd(username string) (password string, error error) {
 	if Exists(username) {
 		return "", &UserNameExistsError{username: username}
 	}
